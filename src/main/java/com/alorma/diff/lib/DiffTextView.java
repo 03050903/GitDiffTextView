@@ -47,7 +47,7 @@ public class DiffTextView extends TextView {
 
 	@Override
 	public void setText(CharSequence text, BufferType type) {
-		if (!TextUtils.isEmpty(text) && type == BufferType.NORMAL) {
+		if (!TextUtils.isEmpty(text)) {
 			String diff = text.toString();
 			String[] split = diff.split("\\r?\\n|\\r");
 
