@@ -24,7 +24,7 @@ Add GitDiffTextView to your layout:
 
 Add diff text:
 
-´´´ java
+``` java
 
 DiffTextView diffTextView = (DiffTextView) findViewById(R.id.diffTextView);
 
@@ -33,4 +33,5 @@ String diffText = "@@ -29,6 +29,7 @@\n                 android:resource=\"@xml/s
 diffTextView.setMaxLines(5);
 
 diffTextView.setText(diffText);
-´´´
+
+```
