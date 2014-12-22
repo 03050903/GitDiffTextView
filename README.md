@@ -2,9 +2,8 @@
 
 With this android library you are able to display DIFF in a TextView.
 
-== Example ==
-
-== Usage ==
+Usage 
+========
 
 Download library and copy into your project, then add gradle dependency:
 
