@@ -14,7 +14,6 @@ local.properties
 
 # Signing files
 .signing/
-gradle.properties
 
 # User-specific configurations
 .idea/*
