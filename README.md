@@ -5,10 +5,12 @@ With this android library you are able to display DIFF in a TextView.
 Usage 
 ========
 
-Download library and copy into your project, then add gradle dependency:
+Add dependency to your build.gradle file:
 
 ``` groovy
-    compile project(':libraries:GitDiffTextView')
+    dependencies {
+        compile 'com.github.alorma:diff-textview:1.0.0'
+    }
 ```
 
 Add GitDiffTextView to your layout: 
