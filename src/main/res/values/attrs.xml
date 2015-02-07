@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="DiffTextStyle">
+        <attr name="diff_theme" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="DiffTextViewStyle">
+        
+        <attr name="diff_addition_color" format="color"/>
+        <attr name="diff_deletion_color" format="color"/>
+        <attr name="diff_show_diff_info" format="boolean"/>
+
+    </declare-styleable>
+    
+</resources>

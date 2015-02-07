@@ -1,7 +1,10 @@
 package com.alorma.diff.lib;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.os.Build;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -16,33 +19,38 @@ public class DiffTextView extends TextView {
 
 	private int additionColor;
 	private int deletionColor;
+	private boolean showInfo;
 	private int maxLines = -1;
 
 	public DiffTextView(Context context) {
-		super(context);
-		init();
+		this(context, null);
 	}
 
 	public DiffTextView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init();
+		init(context, attrs, R.attr.diff_theme);
 	}
 
 	public DiffTextView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		init();
+		init(context, attrs, defStyleAttr);
 	}
 
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	public DiffTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
 		super(context, attrs, defStyleAttr, defStyleRes);
-		init();
+		init(context, attrs, defStyleAttr);
 	}
 
-	private void init() {
+	private void init(Context context, AttributeSet attrs, int defStyleAttr) {
 		isInEditMode();
 
-		additionColor = Color.parseColor("#CCFFCC");
-		deletionColor = Color.parseColor("#FFDDDD");
+		final TypedArray array = context.obtainStyledAttributes(attrs,
+				R.styleable.DiffTextViewStyle, defStyleAttr, 0);
+		this.additionColor = array.getColor(R.styleable.DiffTextViewStyle_diff_addition_color, Color.parseColor("#CCFFCC"));
+		this.deletionColor = array.getColor(R.styleable.DiffTextViewStyle_diff_deletion_color, Color.parseColor("#FFDDDD"));
+		this.showInfo = array.getBoolean(R.styleable.DiffTextViewStyle_diff_show_diff_info, false);
+		array.recycle();
 	}
 
 	@Override
@@ -63,12 +71,10 @@ public class DiffTextView extends TextView {
 
 				for (int i = 0; i < lines; i++) {
 					String token = split[i];
-					if (!token.startsWith("@@")) {
+					if (!token.startsWith("@@") || showInfo) {
 						if (i < (lines - 1)) {
 							token = token.concat("\n");
 						}
-						BackgroundColorSpan span = null;
-						SpannableString spannableDiff = new SpannableString(token);
 
 						char firstChar = token.charAt(0);
 
@@ -79,9 +85,9 @@ public class DiffTextView extends TextView {
 							color = deletionColor;
 						}
 
-						spannableDiff = new SpannableString(token);
+						SpannableString spannableDiff = new SpannableString(token);
 						if (color == additionColor || color == deletionColor) {
-							span = new BackgroundColorSpan(color);
+							BackgroundColorSpan span = new BackgroundColorSpan(color);
 							spannableDiff.setSpan(span, 0, token.length(), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
 						}
 
