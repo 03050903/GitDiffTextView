@@ -19,6 +19,7 @@ public class DiffTextView extends TextView {
 
 	private int additionColor;
 	private int deletionColor;
+	private int infoColor;
 	private boolean showInfo;
 	private int maxLines = -1;
 
@@ -49,6 +50,7 @@ public class DiffTextView extends TextView {
 				R.styleable.DiffTextViewStyle, defStyleAttr, 0);
 		this.additionColor = array.getColor(R.styleable.DiffTextViewStyle_diff_addition_color, Color.parseColor("#CCFFCC"));
 		this.deletionColor = array.getColor(R.styleable.DiffTextViewStyle_diff_deletion_color, Color.parseColor("#FFDDDD"));
+		this.infoColor = array.getColor(R.styleable.DiffTextViewStyle_diff_info_color, Color.parseColor("#EEEEEE"));
 		this.showInfo = array.getBoolean(R.styleable.DiffTextViewStyle_diff_show_diff_info, false);
 		array.recycle();
 	}
@@ -83,11 +85,13 @@ public class DiffTextView extends TextView {
 							color = additionColor;
 						} else if (firstChar == '-') {
 							color = deletionColor;
+						} else if (token.startsWith("@@")) {
+							color = infoColor;
 						}
 
 						SpannableString spannableDiff = new SpannableString(token);
-						if (color == additionColor || color == deletionColor) {
-							BackgroundColorSpan span = new BackgroundColorSpan(color);
+						if (color == additionColor || color == deletionColor || color == infoColor) {
+							DiffLineSpan span = new DiffLineSpan(color, getPaddingLeft());
 							spannableDiff.setSpan(span, 0, token.length(), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
 						}
 
