@@ -9,7 +9,7 @@ Add dependency to your build.gradle file:
 
 ``` groovy
     dependencies {
-        compile 'com.github.alorma:diff-textview:1.0.0'
+        compile 'com.github.alorma:diff-textview:1.2.0'
     }
 ```
 
@@ -30,7 +30,14 @@ Add diff text:
 
 DiffTextView diffTextView = (DiffTextView) findViewById(R.id.diffTextView);
 
-String diffText = "@@ -29,6 +29,7 @@\n                 android:resource=\"@xml/searchable_repos\" />\n         </activity>\n         <activity android:name=\"com.alorma.github.ui.activity.ProfileActivity\" />\n+        <activity android:name=\"com.alorma.github.ui.activity.CommitDetailActivity\" />\n         <activity android:name=\"com.alorma.github.ui.activity.RepoDetailActivity\" />\n         <activity android:name=\"com.alorma.github.ui.dialog.NewIssueCommentDialog\" />\n-         <activity android:name=\"com.alorma.github.ui.activity.FileActivity\" />";
+String diffText = "@@ -29,6 +29,7 @@
+        android:resource=\"@xml/searchable_repos\" />
+    </activity>
+    <activity android:name=\"com.alorma.github.ui.activity.ProfileActivity\" />
++   <activity android:name=\"com.alorma.github.ui.activity.CommitDetailActivity\" />
+    <activity android:name=\"com.alorma.github.ui.activity.RepoDetailActivity\" />
+    <activity android:name=\"com.alorma.github.ui.dialog.NewIssueCommentDialog\" />
+-   <activity android:name=\"com.alorma.github.ui.activity.FileActivity\" />";
 
 diffTextView.setMaxLines(5);
 
