@@ -8,6 +8,7 @@ import android.os.Build;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -16,6 +17,9 @@ public class DiffTextView extends TextView {
 	private int additionColor;
 	private int deletionColor;
 	private int infoColor;
+	private int additionTextColor;
+	private int deletionTextColor;
+	private int infoTextColor;
 	private boolean showInfo;
 	private int maxLines = -1;
 
@@ -47,6 +51,9 @@ public class DiffTextView extends TextView {
 		this.additionColor = array.getColor(R.styleable.DiffTextViewStyle_diff_addition_color, Color.parseColor("#CCFFCC"));
 		this.deletionColor = array.getColor(R.styleable.DiffTextViewStyle_diff_deletion_color, Color.parseColor("#FFDDDD"));
 		this.infoColor = array.getColor(R.styleable.DiffTextViewStyle_diff_info_color, Color.parseColor("#EEEEEE"));
+		this.additionTextColor = array.getColor(R.styleable.DiffTextViewStyle_diff_addition_text_color, Color.TRANSPARENT);
+		this.deletionTextColor = array.getColor(R.styleable.DiffTextViewStyle_diff_deletion_text_color, Color.TRANSPARENT);
+		this.infoTextColor = array.getColor(R.styleable.DiffTextViewStyle_diff_info_text_color, Color.TRANSPARENT);
 		this.showInfo = array.getBoolean(R.styleable.DiffTextViewStyle_diff_show_diff_info, false);
 		array.recycle();
 	}
@@ -76,18 +83,28 @@ public class DiffTextView extends TextView {
 
 						char firstChar = token.charAt(0);
 
-						int color = 0;
+						int color = Color.TRANSPARENT;
+						int textColor = Color.TRANSPARENT;
 						if (firstChar == '+') {
 							color = additionColor;
+							textColor = additionTextColor;
 						} else if (firstChar == '-') {
 							color = deletionColor;
+							textColor = deletionTextColor;
 						} else if (token.startsWith("@@")) {
 							color = infoColor;
+							textColor = infoTextColor;
 						}
 
 						SpannableString spannableDiff = new SpannableString(token);
-						if (color == additionColor || color == deletionColor || color == infoColor) {
+						// Span for line color (where transparent is considered as default)
+						if (color != Color.TRANSPARENT) {
 							DiffLineSpan span = new DiffLineSpan(color, getPaddingLeft());
+							spannableDiff.setSpan(span, 0, token.length(), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
+						}
+						// Span for text color (where transparent is considered as default)
+						if (textColor != Color.TRANSPARENT) {
+							ForegroundColorSpan span = new ForegroundColorSpan(textColor);
 							spannableDiff.setSpan(span, 0, token.length(), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
 						}
 
