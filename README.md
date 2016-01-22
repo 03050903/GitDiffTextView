@@ -9,7 +9,7 @@ Add dependency to your build.gradle file:
 
 ``` groovy
     dependencies {
-        compile 'com.github.alorma:diff-textview:1.2.0'
+        compile 'com.github.alorma:diff-textview:1.2.1'
     }
 ```
 

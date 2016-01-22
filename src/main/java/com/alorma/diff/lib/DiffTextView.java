@@ -8,13 +8,9 @@ import android.os.Build;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.text.style.BackgroundColorSpan;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-/**
- * Created by Bernat on 22/12/2014.
- */
 public class DiffTextView extends TextView {
 
 	private int additionColor;
