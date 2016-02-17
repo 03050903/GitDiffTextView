@@ -2,6 +2,8 @@
 
 With this android library you are able to display DIFF in a TextView.
 
+![GitDiffTextView](art/art.png)
+
 Usage 
 ========
 
